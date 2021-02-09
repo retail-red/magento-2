@@ -1,0 +1,154 @@
+<?php
+
+use Shopgate\RrOmniEnablement\Model\Config;
+
+/** @var Shopgate\RrOmniEnablement\Block\Product $this */
+
+/** @var Shopgate\RrOmniEnablement\Helper\Data $helper */
+$helper = $this->helper(Shopgate\RrOmniEnablement\Helper\Data::class);
+
+if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
+    return;
+}
+
+?>
+<script type='text/javascript' src='https://cdn.retail.red/omni/retailred-storefront-library-v1.js'></script>
+<script type="text/javascript">
+  require([
+    'jquery',
+    'Magento_Catalog/js/product/storage/storage-service',
+    'domReady!'
+  ], function ($, storageService, validator) {
+    var productData = <?= json_encode($this->getProductsConfig()) ?>;
+    var $productAddToCartForm = $('#product_addtocart_form')
+
+    function getSelectedProduct () {
+      var products = storageService.getStorage('product_data_storage').getDataFromLocalStorage()
+      var productId = $productAddToCartForm.find('input[name=product]').val()
+      var product = products[productId]
+
+      var options = $('.swatch-opt').data('mage-SwatchRenderer')
+      var optionsMap = options ? options.optionsMap : []
+
+      var selectedOptions = $('.swatch-option.selected').map(function (i, el) {
+        var $el = $(el)
+        return {
+          option: {
+            code: $el.closest('.swatch-attribute').attr('attribute-id'),
+            label: $el.closest('.swatch-attribute').find('.swatch-attribute-label').text(),
+          },
+          value: {
+            id: $el.attr('option-id'),
+            label: $el.attr('option-label'),
+          },
+        }
+      }).map(function (i, el) {
+        el.value.products = optionsMap[el.option.code][el.value.id].products
+        return el
+      }).get()
+
+      var qty = $productAddToCartForm.find('input[name=qty]').val()
+
+      // Get variant id
+      var variantId = selectedOptions.length <= 0
+        ? null
+        : selectedOptions
+          .map(function (entry) {
+            return entry.value
+          })
+          .reduce(function (acc, value) {
+            // Init with products from first option
+            if (acc === null) {
+              acc = value.products || []
+            } else {
+              // Remove products that don't match with the current value products
+              acc = acc.filter(function (variantId) {
+                return (value.products || []).indexOf(variantId) !== -1
+              })
+            }
+            return acc
+          }, null)
+          .reduce(function (r, variantId) {
+            return variantId || ''
+          }, null)
+
+      var finalPriceAmount = $('[data-price-type="finalPrice"]').data('priceAmount')
+
+      return {
+        id: variantId || product.id,
+        code: variantId ? productData[variantId].sku : productData[productId].sku,
+        imageUrl: product.images[0].url,
+        name: product.name,
+        options: selectedOptions.map(function (opt) {
+          return {
+            name: opt.option.label,
+            value: opt.value.label,
+          };
+        }),
+        price: Number(finalPriceAmount),
+        quantity: qty,
+        currencyCode: '<?= $helper->getCurrencyCode() ?>'
+      };
+    }
+
+    function initRetailred () {
+      try {
+        var localization = <?= $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS) ?>;
+        localization.countries = <?= json_encode(explode(',', $helper->getConfig(Config::XML_PATH_API_COUNTRIES))) ?>;
+
+        var retailred = window.RetailRedStorefront.create({
+          apiKey: '<?= $helper->getConfig(Config::XML_PATH_API_APIKEY) ?>',
+          apiStage: '<?= $helper->getConfig(Config::XML_PATH_API_API_STAGE) ?>',
+          unitSystem: '<?= $helper->getConfig(Config::XML_PATH_API_UNIT_SYSTEM) ?>',
+          localization: localization,
+          inventory: {
+            hideNumber: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_HIDE_NUMBER) === 'yes' ? 'true' : 'false' ?>,
+            showExactUntil: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_SHOW_EXACT_UNTIL) ?: 'null' ?>,
+            showLowUntil: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_SHOW_LOW_UNTIL) ?: 'null' ?>
+          },
+          legal: {
+            terms: <?= $helper->getConfig(Config::XML_PATH_GENERAL_TERMS_LINK) ?: 'null' ?>,
+            privacy: <?= $helper->getConfig(Config::XML_PATH_GENERAL_PRIVACY_LINK) ?: 'null' ?>,
+          },
+          customer: {
+            code: null,
+            firstName: null,
+            lastName: null,
+            phone: null,
+            emailAddress: null,
+          },
+          product: getSelectedProduct(),
+          templates: {
+            customTemplates: {
+              reserveButton: '<button id="rr-omni-reserve-button" class="action primary tocart">{{t "reserveButton.title" }}</button>'
+            }
+          }
+        });
+
+        $productAddToCartForm.find('input[name=qty]').change(function () {
+          retailred.updateConfig({
+            product: {
+              quantity: $(this).val(),
+            },
+          })
+        });
+
+        $('[data-role=priceBox]').on('updatePrice', function () {
+          /** Swatches module dispatch this event */
+          retailred.updateConfig({
+            product: getSelectedProduct(),
+          })
+        });
+
+        retailred.renderReserveButton('#rr-dropin');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    storageService.onStorageInit('product_data_storage', function () {
+      setTimeout(initRetailred, 500);
+    });
+});
+
+</script>

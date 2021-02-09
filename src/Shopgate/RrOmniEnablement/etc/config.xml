@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <retailred_omnienablement>
+            <api>
+                <status>enabled</status>
+                <apiKey />
+                <apiStage>staging</apiStage>
+                <unitSystem>metric</unitSystem>
+                <countries>de</countries>
+            </api>
+            <general>
+                <inventoryHideNumber>no</inventoryHideNumber>
+                <inventoryShowExactUntil />
+                <inventoryShowLowUntil>5</inventoryShowLowUntil>
+                <termsLink />
+                <privacyLink />
+            </general>
+            <design>
+                <colors><![CDATA[
+/* Primary color used for form elements and buttons */
+--color-primary: 25, 121, 195;
+/* Color used for links */
+--color-link: 60, 155, 181;
+/* Color used for alerting texts like errors */
+--color-state-alarm : 176, 0, 32;
+/* Color used for highlighting problems like low stock */
+--color-state-warning: 241, 156, 69;
+/* Color used for positve highlighting like successful reservation text. */
+--color-state-success: 50, 172, 92;
+                ]]></colors>
+                <translations><![CDATA[
+{
+    "de":{
+        "reserve.submit":"Reserve JETZT"
+    },
+    "en":{
+        "reserve.submit":"Reserve NOW"
+    }
+}
+                    ]]></translations>
+            </design>
+        </retailred_omnienablement>
+    </default>
+</config>

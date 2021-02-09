@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="retailred" translate="label" sortOrder="999">
+            <label>Retailred</label>
+        </tab>
+
+        <section id="retailred_omnienablement" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Retailred (Omni enablement)</label>
+            <tab>retailred</tab>
+            <resource>Shopgate_RrOmniEnablement::config</resource>
+
+            <group id="api" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Plugin &amp; Storefront configuration</label>
+
+                <field id="status" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Integration</label>
+                    <options>
+                        <option label="Enabled">enabled</option>
+                        <option label="Disabled">disabled</option>
+                    </options>
+                </field>
+
+                <field id="apiKey" translate="label" type="password" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Storefront API Key</label>
+                </field>
+
+                <field id="apiStage" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Storefront Stage</label>
+                    <options>
+                        <option label="production">production</option>
+                        <option label="staging">staging</option>
+                        <option label="development">development</option>
+                    </options>
+                </field>
+
+                <field id="unitSystem" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Units</label>
+                    <options>
+                        <option label="metric">metric</option>
+                        <option label="imperial">imperial</option>
+                    </options>
+                </field>
+
+                <field id="countries" translate="label" type="multiselect" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Countries</label>
+                    <options>
+                        <option label="de">de</option>
+                        <option label="us">us</option>
+                    </options>
+                </field>
+
+            </group>
+            <group id="general" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Configuration</label>
+
+                <field id="inventoryHideNumber" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Hide stock</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Hides the stock number and therefore display only if the product is available or not.</comment>
+                </field>
+
+                <field id="inventoryShowExactUntil" translate="label" type="text" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Show exact inventory until</label>
+                    <comment>If inventory is higher than the given number the inventory will be displayed as "X+ Available"</comment>
+                </field>
+
+                <field id="inventoryShowLowUntil" translate="label" type="text" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Show low inventory until</label>
+                    <comment>If inventory is lower than the given number the inventory will be displayed in the state-warning color</comment>
+                </field>
+
+                <field id="termsLink" translate="label" type="text" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Terms Link</label>
+                    <comment>Add an url to the terms and condition page, also enforces the user to accept them before placing an reservation</comment>
+                </field>
+
+                <field id="privacyLink" translate="label" type="text" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Privacy Link</label>
+                    <comment>Add an url to the privacy page, also enforces the user to accept them before placing an reservation</comment>
+                </field>
+
+            </group>
+            <group id="design" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Design &amp; UI</label>
+
+                <field id="colors" translate="label" type="textarea" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Colors</label>
+                    <comment>Please use only the 3 numbers of rgb schema. rgb(1,2,3) -> 1,2,3</comment>
+                </field>
+
+                <field id="translations" translate="label" type="textarea" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Translations JSON</label>
+                    <comment>JSON format. All strings can be found in the github repo</comment>
+                </field>
+
+            </group>
+        </section>
+    </system>
+</config>
