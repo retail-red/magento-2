@@ -3,12 +3,12 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="retailred" translate="label" sortOrder="999">
-            <label>Retailred</label>
+            <label>Retail.red</label>
         </tab>
 
         <section id="retailred_omnienablement" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Retailred (Omni enablement)</label>
+            <label>Configuration</label>
             <tab>retailred</tab>
             <resource>Shopgate_RrOmniEnablement::config</resource>
 
@@ -18,8 +18,8 @@
                 <field id="status" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Integration</label>
                     <options>
-                        <option label="Enabled">enabled</option>
-                        <option label="Disabled">disabled</option>
+                        <option label="enabled">enabled</option>
+                        <option label="disabled">disabled</option>
                     </options>
                 </field>
 
