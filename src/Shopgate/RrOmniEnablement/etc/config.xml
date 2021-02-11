@@ -29,16 +29,7 @@
 /* Color used for positve highlighting like successful reservation text. */
 --color-state-success: 50, 172, 92;
                 ]]></colors>
-                <translations><![CDATA[
-{
-    "de":{
-        "reserve.submit":"Reserve JETZT"
-    },
-    "en":{
-        "reserve.submit":"Reserve NOW"
-    }
-}
-                    ]]></translations>
+                <translations />
             </design>
         </retailred_omnienablement>
     </default>
