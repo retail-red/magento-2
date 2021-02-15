@@ -1,5 +1,5 @@
 <?php
-namespace Shopgate\RrOmniEnablement\Helper;
+namespace Retailred\Storefront\Helper;
 
 /**
  * Copyright Shopgate GmbH.

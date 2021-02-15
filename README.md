@@ -1,4 +1,4 @@
-# Retail.red Integration for Magento2
+# Retail.red Storefront Integration for Magento2
 
 ### Installation using a release zip file
 
@@ -7,7 +7,7 @@
 
 ```sh
 cd [mage root folder]
-bin/magento module:enable Shopgate_RrOmniEnablement
+bin/magento module:enable Retailred_Storefront
 bin/magento setup:upgrade
 bin/magento setup:di:compile
 bin/magento cache:clean

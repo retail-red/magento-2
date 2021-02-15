@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <retailred_omnienablement>
+        <retailred_storefront>
             <api>
                 <status>enabled</status>
                 <apiKey />
@@ -31,6 +31,6 @@
                 ]]></colors>
                 <translations />
             </design>
-        </retailred_omnienablement>
+        </retailred_storefront>
     </default>
 </config>

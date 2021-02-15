@@ -1,12 +1,12 @@
 <?php
 
-use Shopgate\RrOmniEnablement\Helper\Data;
-use Shopgate\RrOmniEnablement\Model\Config;
+use Retailred\Storefront\Helper\Data;
+use Retailred\Storefront\Model\Config;
 
-/** @var Shopgate\RrOmniEnablement\Block\Product $this */
+/** @var Retailred\Storefront\Block\Product $this */
 
-/** @var Shopgate\RrOmniEnablement\Helper\Data $helper */
-$helper = $this->helper(Shopgate\RrOmniEnablement\Helper\Data::class);
+/** @var Retailred\Storefront\Helper\Data $helper */
+$helper = $this->helper(Retailred\Storefront\Helper\Data::class);
 
 if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
     return;

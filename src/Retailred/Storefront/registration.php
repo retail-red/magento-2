@@ -20,6 +20,6 @@
  */
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Shopgate_RrOmniEnablement',
+    'Retailred_Storefront',
     __DIR__
 );

@@ -18,19 +18,19 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-namespace Shopgate\RrOmniEnablement\Block;
+namespace Retailred\Storefront\Block;
 
 class Product extends \Magento\Catalog\Block\Product\View\AbstractView
 {
     /**
-     * @var \Shopgate\RrOmniEnablement\Helper\Product
+     * @var \Retailred\Storefront\Helper\Product
      */
     protected $productHelper;
 
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
         \Magento\Framework\Stdlib\ArrayUtils $arrayUtils,
-        \Shopgate\RrOmniEnablement\Helper\Product $productHelper
+        \Retailred\Storefront\Helper\Product $productHelper
     ) {
         $this->productHelper = $productHelper;
         parent::__construct($context,$arrayUtils);

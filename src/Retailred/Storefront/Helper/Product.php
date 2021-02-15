@@ -19,14 +19,14 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-namespace Shopgate\RrOmniEnablement\Helper;
+namespace Retailred\Storefront\Helper;
 
 use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection as ConfigurableProductCollection;
 use Magento\Framework\App\ObjectManager;
 
 class Product extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    private static $cacheKeyProductVariantsCollection = '_cache_shopgate_rromnienablement_variants';
+    private static $cacheKeyProductVariantsCollection = '_cache_retailred_storefront_variants';
 
     /**
      * Get variants collection for configurable product

@@ -6,11 +6,11 @@
             <label>Retail.red</label>
         </tab>
 
-        <section id="retailred_omnienablement" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="retailred_storefront" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Configuration</label>
             <tab>retailred</tab>
-            <resource>Shopgate_RrOmniEnablement::config</resource>
+            <resource>Retailred_Storefront::config</resource>
 
             <group id="api" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
                 <label>Plugin &amp; Storefront configuration</label>

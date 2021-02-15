@@ -6,7 +6,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Shopgate_RrOmniEnablement::config" title="Retailred (Omni enablement)" sortOrder="100" />
+                            <resource id="Retailred_Storefront::config" title="Retailred (Storefront)" sortOrder="100" />
                         </resource>
                     </resource>
                 </resource>
