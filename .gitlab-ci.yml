@@ -9,7 +9,7 @@ release:
   stage: release
   before_script:
     - apt-get update -qq && apt-get install -y -qq git wget zip rsync composer unzip php7.3-xml xmlstarlet > /dev/null
-    - pip3 install gitlab-release > /dev/null
+    - pip3 install gitlab-release==3.6
   script:
     - echo ${PACKAGE_NAME}
     - cd src && zip -r ../shopgate_rromnienablement-${CI_COMMIT_TAG}.zip . && cd ..
