@@ -19,6 +19,3 @@ bin/magento cache:clean
 
 ## Support
 Contact us via [mail@retail.red](mailto:mail@retail.red)
-
-## Changelog
-See [CHANGELOG.md](CHANGELOG.md) file for more information.
