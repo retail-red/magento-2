@@ -6,7 +6,8 @@ The script adds a “reserve” button to the product detail page, via which a n
 
 ## Installation
 1. Download the [latest releases](https://github.com/retail-red/magento-2/releases/latest)
-2. Unpack all contents of the zip file to `[mage root]/app/code/`.
+2. Unpack all contents of the zip file and copy content from `src` folder to `[mage root]/app/code/`.
+    - structure should be `/app/code/Retailred/Storefront`
 3. Install module with magento cli
     ```sh
     cd [mage root folder]
