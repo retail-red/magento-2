@@ -56,6 +56,22 @@
             <group id="general" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
                 <label>Configuration</label>
 
+                <field id="renderLiveInventory" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Render live inventory</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Display the product inventory directly in the Product Details Page and lets the user start the reservation flow.</comment>
+                </field>
+
+                <field id="renderLiveInventoryMode" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Live inventory render mode</label>
+                    <options>
+                        <option label="modal">modal</option>
+                        <option label="list">list</option>
+                    </options>
+                    <comment>When set to "modal" (default behavior) the user can choose a store using the retail.red store list modal. This is recommended if you have many stores in different locations.
+                        When set to "list" the user can choose a store using simple dropdown without the overhead of going through the store list modal. This is recommended if you have less than 10 locations available</comment>
+                </field>
+
                 <field id="inventoryHideNumber" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Hide stock</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

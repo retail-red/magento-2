@@ -17,14 +17,18 @@ if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
 <style type="text/css">
     .rr-wrapper {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
-        align-items: center;
         transform: translateY(-30px);
     }
-    #rr-dropin {
+    #rr-reserve-button {
         flex-grow: 1;
     }
+    #rr-live-inventory {
+        flex-grow: 1;
+        margin-top: 12px;
+    }
+
     #rr-omni-reserve-button{
         width: 100%;
         line-height: 2.2rem;
@@ -36,7 +40,8 @@ if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
 </style>
 
 <div class="rr-wrapper">
-    <div id="rr-dropin"></div>
+    <div id="rr-reserve-button"></div>
+    <div id="rr-live-inventory"></div>
 </div>
 
 <script type="text/javascript">

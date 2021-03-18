@@ -11,7 +11,10 @@ if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
     return;
 }
 
+$hasLiveInventory = filter_var($helper->getConfig(Config::XML_PATH_GENERAL_RENDER_LIVE_INVENTORY, FILTER_VALIDATE_BOOLEAN));
+$liveInventoryMode = $helper->getConfig(Config::XML_PATH_GENERAL_RENDER_LIVE_INVENTORY_MODE);
 ?>
+
 <script type='text/javascript' src='https://cdn.retail.red/omni/retailred-storefront-library-v1.js'></script>
 <script type="text/javascript">
   require([
@@ -158,11 +161,19 @@ if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
           })
         });
 
-        retailred.renderReserveButton('#rr-dropin', {}, function(next) {
+        <?php if (!$hasLiveInventory) : ?>
+        retailred.renderReserveButton('#rr-reserve-button', {}, function(next) {
           if ($productAddToCartForm.valid && $productAddToCartForm.valid()) {
             next();
           }
         });
+        <?php endif; ?>
+
+        <?php if ($hasLiveInventory) : ?>
+        retailred.renderLiveInventory('#rr-live-inventory', {
+          variant: '<?= $liveInventoryMode ?>'
+        });
+        <?php endif; ?>
 
       } catch (e) {
         console.error(e);

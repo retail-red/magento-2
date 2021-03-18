@@ -10,6 +10,9 @@
                 <countries>de</countries>
             </api>
             <general>
+                <renderLiveInventory>no</renderLiveInventory>
+                <renderLiveInventoryMode>modal</renderLiveInventoryMode>
+                <inventoryHideNumber>no</inventoryHideNumber>
                 <inventoryHideNumber>no</inventoryHideNumber>
                 <inventoryShowExactUntil />
                 <inventoryShowLowUntil>5</inventoryShowLowUntil>

@@ -29,6 +29,8 @@ class Config
     const XML_PATH_API_UNIT_SYSTEM = 'retailred_storefront/api/unitSystem';
     const XML_PATH_API_COUNTRIES = 'retailred_storefront/api/countries';
 
+    const XML_PATH_GENERAL_RENDER_LIVE_INVENTORY = 'retailred_storefront/general/renderLiveInventory';
+    const XML_PATH_GENERAL_RENDER_LIVE_INVENTORY_MODE = 'retailred_storefront/general/renderLiveInventoryMode';
     const XML_PATH_GENERAL_INVENTORY_HIDE_NUMBER = 'retailred_storefront/general/inventoryHideNumber';
     const XML_PATH_GENERAL_INVENTORY_SHOW_EXACT_UNTIL = 'retailred_storefront/general/inventoryShowExactUntil';
     const XML_PATH_GENERAL_INVENTORY_SHOW_LOW_UNTIL = 'retailred_storefront/general/inventoryShowLowUntil';
