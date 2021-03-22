@@ -7,12 +7,12 @@ use Retailred\Storefront\Model\Config;
 /** @var Retailred\Storefront\Helper\Data $helper */
 $helper = $this->helper(Retailred\Storefront\Helper\Data::class);
 
-if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
+if ($helper->getConfig(Config::XML_PATH_GENERAL_RENDER) === Config::RENDER_DISABLED) {
     return;
 }
 
-$hasLiveInventory = filter_var($helper->getConfig(Config::XML_PATH_GENERAL_RENDER_LIVE_INVENTORY, FILTER_VALIDATE_BOOLEAN));
-$liveInventoryMode = $helper->getConfig(Config::XML_PATH_GENERAL_RENDER_LIVE_INVENTORY_MODE);
+$isLiveInventory = $helper->getConfig(Config::XML_PATH_GENERAL_RENDER) === Config::RENDER_LIVE_INVENTORY;
+$liveInventoryMode = $helper->getConfig(Config::XML_PATH_GENERAL_RENDER_MODE);
 ?>
 
 <script type='text/javascript' src='https://cdn.retail.red/omni/retailred-storefront-library-v1.js'></script>
@@ -161,7 +161,7 @@ $liveInventoryMode = $helper->getConfig(Config::XML_PATH_GENERAL_RENDER_LIVE_INV
           })
         });
 
-        <?php if (!$hasLiveInventory) : ?>
+        <?php if (!$isLiveInventory) : ?>
         retailred.renderReserveButton('#rr-reserve-button', {}, function(next) {
           if ($productAddToCartForm.valid && $productAddToCartForm.valid()) {
             next();
@@ -169,7 +169,7 @@ $liveInventoryMode = $helper->getConfig(Config::XML_PATH_GENERAL_RENDER_LIVE_INV
         });
         <?php endif; ?>
 
-        <?php if ($hasLiveInventory) : ?>
+        <?php if ($isLiveInventory) : ?>
         retailred.renderLiveInventory('#rr-live-inventory', {
           variant: '<?= $liveInventoryMode ?>'
         });

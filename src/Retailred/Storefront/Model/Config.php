@@ -23,14 +23,13 @@ namespace Retailred\Storefront\Model;
 
 class Config
 {
-    const XML_PATH_API_STATUS = 'retailred_storefront/api/status';
     const XML_PATH_API_APIKEY = 'retailred_storefront/api/apiKey';
     const XML_PATH_API_API_STAGE = 'retailred_storefront/api/apiStage';
     const XML_PATH_API_UNIT_SYSTEM = 'retailred_storefront/api/unitSystem';
     const XML_PATH_API_COUNTRIES = 'retailred_storefront/api/countries';
 
-    const XML_PATH_GENERAL_RENDER_LIVE_INVENTORY = 'retailred_storefront/general/renderLiveInventory';
-    const XML_PATH_GENERAL_RENDER_LIVE_INVENTORY_MODE = 'retailred_storefront/general/renderLiveInventoryMode';
+    const XML_PATH_GENERAL_RENDER = 'retailred_storefront/general/render';
+    const XML_PATH_GENERAL_RENDER_MODE = 'retailred_storefront/general/renderMode';
     const XML_PATH_GENERAL_INVENTORY_HIDE_NUMBER = 'retailred_storefront/general/inventoryHideNumber';
     const XML_PATH_GENERAL_INVENTORY_SHOW_EXACT_UNTIL = 'retailred_storefront/general/inventoryShowExactUntil';
     const XML_PATH_GENERAL_INVENTORY_SHOW_LOW_UNTIL = 'retailred_storefront/general/inventoryShowLowUntil';
@@ -39,4 +38,11 @@ class Config
 
     const XML_PATH_DESIGN_COLORS = 'retailred_storefront/design/colors';
     const XML_PATH_DESIGN_TRANSLATIONS = 'retailred_storefront/design/translations';
+
+    const RENDER_DISABLED = 'disabled';
+    const RENDER_RESERVE_BUTTON = 'reserveButton';
+    const RENDER_LIVE_INVENTORY = 'liveInventory';
+
+    const RENDER_MODE_MODAL = 'modal';
+    const RENDER_MODE_LIST = 'list';
 }

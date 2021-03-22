@@ -3,15 +3,14 @@
     <default>
         <retailred_storefront>
             <api>
-                <status>enabled</status>
                 <apiKey />
                 <apiStage>staging</apiStage>
                 <unitSystem>metric</unitSystem>
                 <countries>de</countries>
             </api>
             <general>
-                <renderLiveInventory>no</renderLiveInventory>
-                <renderLiveInventoryMode>modal</renderLiveInventoryMode>
+                <render>reserveButton</render>
+                <renderMode>modal</renderMode>
                 <inventoryHideNumber>no</inventoryHideNumber>
                 <inventoryHideNumber>no</inventoryHideNumber>
                 <inventoryShowExactUntil />

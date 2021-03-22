@@ -8,7 +8,7 @@ use Retailred\Storefront\Model\Config;
 /** @var Retailred\Storefront\Helper\Data $helper */
 $helper = $this->helper(Retailred\Storefront\Helper\Data::class);
 
-if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
+if ($helper->getConfig(Config::XML_PATH_GENERAL_RENDER) === Config::RENDER_DISABLED) {
     return;
 }
 
@@ -24,7 +24,7 @@ if ($helper->getConfig(Config::XML_PATH_API_STATUS) === 'disabled') {
     #rr-reserve-button {
         flex-grow: 1;
     }
-    #rr-live-inventory {
+    #rr-live-inventory:not(:empty) {
         flex-grow: 1;
         margin-top: 12px;
     }
