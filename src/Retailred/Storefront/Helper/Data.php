@@ -58,4 +58,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->storeManager->getStore()->getCurrentCurrencyCode();
     }
+
+    /**
+     * Returns locale in format lang-territory, eg. en-us, en-uk
+     * @return string
+     */
+    public function getLocaleCode()
+    {
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        /** @var \Magento\Framework\Locale\Resolver $resolver */
+        $resolver = $om->get(\Magento\Framework\Locale\Resolver::class);
+        $locale = $resolver->getLocale();
+        return strtolower(
+            substr($locale, 0, 2)
+            . '-'
+            . substr($locale, 3, 2)
+        );
+    }
 }

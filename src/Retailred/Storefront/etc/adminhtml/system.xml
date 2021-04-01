@@ -15,14 +15,6 @@
             <group id="api" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
                 <label>Plugin &amp; Storefront configuration</label>
 
-                <field id="status" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
-                    <label>Integration</label>
-                    <options>
-                        <option label="enabled">enabled</option>
-                        <option label="disabled">disabled</option>
-                    </options>
-                </field>
-
                 <field id="apiKey" translate="label" type="password" showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Storefront API Key</label>
                 </field>
@@ -55,6 +47,35 @@
             </group>
             <group id="general" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
                 <label>Configuration</label>
+
+                <field id="render" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Display on product detail page</label>
+                    <options>
+                        <option label="Disabled">disabled</option>
+                        <option label="Show reservation button">reserveButton</option>
+                        <option label="Show availability in store">liveInventory</option>
+                    </options>
+                    <comment><![CDATA[
+                        Choose what should be displayed on the product detail page. <br/>
+                        Reservation button - A button that opens a popup with a store list and the availability of the selected product in these stores. <br/>
+                        Availability in store - A box that directly shows the availability of the product in the store.
+                        The customer has to select a store the first time.
+                    ]]></comment>
+                </field>
+
+                <field id="renderMode" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Store selection</label>
+                    <options>
+                        <option label="Modal">modal</option>
+                        <option label="Dropdown">list</option>
+                    </options>
+                    <comment><![CDATA[
+                        Only relevant if "Show availability in store" is selected above. Choose how the customer can select his store. <br/>
+                        Modal - Opens a popup where the customer can search for his store via zip code or geolocation.
+                        Also shows address, distance and opening hours if available. <br/>
+                        Dropdown - A simple dropdown where the customer can choose the store from. Recommended only for small amount of stores.
+                    ]]></comment>
+                </field>
 
                 <field id="inventoryHideNumber" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Hide stock</label>

@@ -7,7 +7,7 @@
         <referenceContainer name="before.body.end">
             <block
                 before="-"
-                template="Retailred_Storefront::button.phtml"
+                template="Retailred_Storefront::elements.phtml"
                 class="Retailred\Storefront\Block\Product"
             />
             <block
