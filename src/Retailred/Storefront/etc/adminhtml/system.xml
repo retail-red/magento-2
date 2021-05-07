@@ -28,6 +28,33 @@
                     </options>
                 </field>
 
+                <field id="browserHistory" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Browser History</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[
+                        If enabled the browsers history will be used within the reservation modal allowing the users to navigate with the native controls.
+                        Can be disabled when your store is already using the browsers history internally and the modals history conflicts with it.
+                    ]]></comment>
+                </field>
+
+                <field id="useGeolocationImmediately" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Use Geolocation Immediately</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[
+                        If enabled, whenever the user opens the store list the browsers geolocation will be requested
+                        immediately instead of only after pressing the locate me button.
+                    ]]></comment>
+                </field>
+
+                <field id="testMode" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Test Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[
+                        When set to true no buttons will be rendered within the users browser, till the page was once opened
+                        with a query parameter like rrTesting=start. A testing session can be stopped by opening the page with rrTesting=end
+                    ]]></comment>
+                </field>
+
                 <field id="unitSystem" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Units</label>
                     <options>
