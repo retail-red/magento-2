@@ -28,6 +28,14 @@
                     </options>
                 </field>
 
+                <field id="productCodeMapping" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Use as product code</label>
+                    <options>
+                        <option label="SKU">sku</option>
+                        <option label="ID">id</option>
+                    </options>
+                </field>
+
                 <field id="browserHistory" translate="label comment" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
                     <label>Browser History</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

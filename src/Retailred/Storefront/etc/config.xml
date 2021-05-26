@@ -6,6 +6,7 @@
                 <apiKey />
                 <apiStage>staging</apiStage>
                 <unitSystem>metric</unitSystem>
+                <productCodeMapping>sku</productCodeMapping>
                 <countries>de</countries>
                 <browserHistory>1</browserHistory>
                 <useGeolocationImmediately>1</useGeolocationImmediately>
