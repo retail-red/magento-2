@@ -20,6 +20,9 @@
 
 namespace Retailred\Storefront\Block;
 
+use Retailred\Storefront\Helper\Data;
+use Retailred\Storefront\Model\Config;
+
 class Product extends \Magento\Catalog\Block\Product\View\AbstractView
 {
     /**
@@ -42,16 +45,26 @@ class Product extends \Magento\Catalog\Block\Product\View\AbstractView
      */
     public function getProductsConfig()
     {
+        $helper = \Magento\Framework\App\ObjectManager::getInstance()->get(Data::class);
+        $productField = $helper->getConfig(Config::XML_PATH_API_PRODUCT_CODE_MAPPING);
+
         $currentProduct = $this->getProduct();
         $fields = ['name', 'sku'];
         $data = [
             $currentProduct->getId() => $currentProduct->toArray($fields)
         ];
+        $data[$currentProduct->getId()]['number'] = $productField === 'sku'
+            ? $currentProduct->getSku()
+            : $currentProduct->getId();
 
         if($currentProduct->getTypeId() === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
             $variants = $this->productHelper->getProductVariants($currentProduct);
             foreach ($variants as /* @var \Magento\Catalog\Model\Product $variant */ $variant) {
                 $data[$variant->getId()] = $variant->toArray($fields);
+                $data[$variant->getId()]['number'] = $productField === 'sku'
+                    ? $variant->getSku()
+                    : $variant->getId();
+
             }
         }
         return $data;

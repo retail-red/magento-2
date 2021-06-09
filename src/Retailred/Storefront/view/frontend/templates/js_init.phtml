@@ -87,9 +87,12 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
       }
 
       return {
-        code: variantId ? productData[variantId].sku : productData[productId].sku,
+        code: productData[variantId || productId].number,
         imageUrl: imageUrl,
         name: product.name,
+        identifiers: {
+          sku: productData[variantId || productId].sku,
+        },
         options: selectedOptions.map(function (opt) {
           return {
             name: opt.option.label,
