@@ -20,6 +20,7 @@
                 <inventoryShowLowUntil>5</inventoryShowLowUntil>
                 <termsLink />
                 <privacyLink />
+                <productIdentifiers>ean,isbn</productIdentifiers>
             </general>
             <design>
                 <colors><![CDATA[
