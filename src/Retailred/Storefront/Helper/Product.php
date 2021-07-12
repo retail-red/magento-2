@@ -31,9 +31,10 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Get variants collection for configurable product
      * @param \Magento\Catalog\Model\Product $product
+     * @param array $attributesToSelect
      * @return ConfigurableProductCollection
      */
-    public function getProductVariants(\Magento\Catalog\Model\Product $product)
+    public function getProductVariants(\Magento\Catalog\Model\Product $product, array $attributesToSelect = [])
     {
         if (!$product->hasData(static::$cacheKeyProductVariantsCollection)) {
             $objectManager = ObjectManager::getInstance();
@@ -42,6 +43,7 @@ class Product extends \Magento\Framework\App\Helper\AbstractHelper
 
             $collection = $productCollection->setFlag('product_children', true)
                 ->setProductFilter($product)
+                ->addAttributeToSelect($attributesToSelect)
                 ->setStoreId($product->getStoreId());
 
             $product->setData(static::$cacheKeyProductVariantsCollection, $collection);

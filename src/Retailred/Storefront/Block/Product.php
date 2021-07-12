@@ -22,6 +22,7 @@ namespace Retailred\Storefront\Block;
 
 use Retailred\Storefront\Helper\Data;
 use Retailred\Storefront\Model\Config;
+use Retailred_Storefront_Model_Config;
 
 class Product extends \Magento\Catalog\Block\Product\View\AbstractView
 {
@@ -48,23 +49,49 @@ class Product extends \Magento\Catalog\Block\Product\View\AbstractView
         $helper = \Magento\Framework\App\ObjectManager::getInstance()->get(Data::class);
         $productField = $helper->getConfig(Config::XML_PATH_API_PRODUCT_CODE_MAPPING);
 
+        $identifiers = $helper->getConfig(Config::XML_PATH_GENERAL_PRODUCT_IDENTIFIERS);
+        if (!empty($identifiers)) {
+            $identifiers = explode(',', $identifiers);
+        } else {
+            $identifiers = [];
+        }
+
         $currentProduct = $this->getProduct();
         $fields = ['name', 'sku'];
         $data = [
-            $currentProduct->getId() => $currentProduct->toArray($fields)
+            $currentProduct->getId() => [
+                'name' => $currentProduct->getName(),
+                'number' => $productField === 'sku'
+                    ? $currentProduct->getSku()
+                    : $currentProduct->getId(),
+                'identifiers' => [
+                    'sku' => $currentProduct->getSku()
+                ]
+            ]
         ];
-        $data[$currentProduct->getId()]['number'] = $productField === 'sku'
-            ? $currentProduct->getSku()
-            : $currentProduct->getId();
+        if (!empty($identifiers)) {
+            foreach ($identifiers as $identifier) {
+                $data[$currentProduct->getId()]['identifiers'][$identifier] = $currentProduct->getData($identifier);
+            }
+        }
 
         if($currentProduct->getTypeId() === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
-            $variants = $this->productHelper->getProductVariants($currentProduct);
+            $variants = $this->productHelper->getProductVariants($currentProduct, $identifiers);
             foreach ($variants as /* @var \Magento\Catalog\Model\Product $variant */ $variant) {
-                $data[$variant->getId()] = $variant->toArray($fields);
-                $data[$variant->getId()]['number'] = $productField === 'sku'
-                    ? $variant->getSku()
-                    : $variant->getId();
-
+                $data[$variant->getId()] = [
+                    'name' => $variant->getName(),
+                    'number' => $productField === 'sku'
+                        ? $variant->getSku()
+                        : $variant->getId(),
+                    'identifiers' => [
+                        'sku' => $currentProduct->getSku()
+                    ]
+                ];
+                if (!empty($identifiers)) {
+                    foreach ($identifiers as $identifier) {
+                        $data[$variant->getId()]['identifiers'][$identifier] = $variant->getData($identifier);
+                    }
+                }
             }
         }
         return $data;
