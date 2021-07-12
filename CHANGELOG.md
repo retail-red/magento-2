@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.2] - 2021-07-12
+
+### Feature:
+- Add product attributes as product identifiers
+- Implement new options format
+- Add config for productNumber mapping
+
 ## [1.1.1] - 2021-05-12
 
 ### Feature:
