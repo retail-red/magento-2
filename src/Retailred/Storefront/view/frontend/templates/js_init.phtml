@@ -42,11 +42,11 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
         var $el = $(el)
         return {
           option: {
-            code: $el.closest('.swatch-attribute').attr('attribute-id'),
+            code: $el.closest('.swatch-attribute').attr('attribute-id').toString(),
             label: $el.closest('.swatch-attribute').find('.swatch-attribute-label').text(),
           },
           value: {
-            id: $el.attr('option-id'),
+            id: $el.attr('option-id').toString(),
             label: $el.attr('option-label'),
           },
         }
@@ -101,10 +101,10 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
         identifiers: productData[variantId || productId].identifiers,
         options: selectedOptions.map(function (opt) {
           return{
-            code: opt.option.code || opt.option.id,
+            code: (opt.option.code || opt.option.id).toString(),
             name: opt.option.label,
             value: {
-              code: opt.value.code || opt.value.id,
+              code: (opt.value.code || opt.value.id).toString(),
               name: opt.value.label
             }
           };
