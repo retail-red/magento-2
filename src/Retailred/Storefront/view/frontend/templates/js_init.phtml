@@ -36,17 +36,17 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
       var product = products[productId]
 
       var swatches = $('.swatch-opt').data('mage-SwatchRenderer')
-      var optionsMap = swatches ? swatches.optionsMap : []
+      var optionsMap = swatches ? swatches.optionsMap : {}
 
       var selectedOptions = $('.swatch-option.selected').map(function (i, el) {
         var $el = $(el)
         return {
           option: {
-            code: $el.closest('.swatch-attribute').attr('attribute-id'),
+            code: $el.closest('.swatch-attribute').attr('attribute-id').toString(),
             label: $el.closest('.swatch-attribute').find('.swatch-attribute-label').text(),
           },
           value: {
-            id: $el.attr('option-id'),
+            id: $el.attr('option-id').toString(),
             label: $el.attr('option-label'),
           },
         }
@@ -55,8 +55,10 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
         return el
       }).get()
 
+      var processVariant = selectedOptions.length > 0 && selectedOptions.length === Object.keys(optionsMap).length;
+
       // Get variant id
-      var variantId = selectedOptions.length <= 0
+      var variantId = !processVariant
         ? null
         : selectedOptions
           .map(function (entry) {
@@ -86,18 +88,24 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
         }
       }
 
+      var selectedProduct = productData[variantId || productId];
+
       return {
-        code: productData[variantId || productId].number,
+        /**
+         * Do not send configurable product or auto-detected product.
+         * Only explicit user selection
+         */
+        code: selectedProduct.type === 'standard' ? selectedProduct.number : null,
         imageUrl: imageUrl,
         name: product.name,
         identifiers: productData[variantId || productId].identifiers,
         options: selectedOptions.map(function (opt) {
           return{
-            code: opt.option.code || opt.option.id,
-            name: opt.option.label,
+            code: (opt.option.code || opt.option.id).toString(),
+            name: opt.option.label.toString(),
             value: {
-              code: opt.value.code || opt.value.id,
-              name: opt.value.label
+              code: (opt.value.code || opt.value.id).toString(),
+              name: opt.value.label.toString()
             }
           };
         }),

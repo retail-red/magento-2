@@ -57,10 +57,10 @@ class Product extends \Magento\Catalog\Block\Product\View\AbstractView
         }
 
         $currentProduct = $this->getProduct();
-        $fields = ['name', 'sku'];
         $data = [
             $currentProduct->getId() => [
                 'name' => $currentProduct->getName(),
+                'type' => 'standard',
                 'number' => $productField === 'sku'
                     ? $currentProduct->getSku()
                     : $currentProduct->getId(),
@@ -76,10 +76,12 @@ class Product extends \Magento\Catalog\Block\Product\View\AbstractView
         }
 
         if($currentProduct->getTypeId() === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
+            $data[$currentProduct->getId()]['type'] = 'configurable';
             $variants = $this->productHelper->getProductVariants($currentProduct, $identifiers);
             foreach ($variants as /* @var \Magento\Catalog\Model\Product $variant */ $variant) {
                 $data[$variant->getId()] = [
                     'name' => $variant->getName(),
+                    'type' => 'standard',
                     'number' => $productField === 'sku'
                         ? $variant->getSku()
                         : $variant->getId(),
