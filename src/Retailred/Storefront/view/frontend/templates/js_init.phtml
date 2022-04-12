@@ -39,15 +39,18 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
       var optionsMap = swatches ? swatches.optionsMap : {}
 
       var selectedOptions = $('.swatch-option.selected').map(function (i, el) {
-        var $el = $(el)
+        var $el = $(el);
+        var $swatchAttribute = $el.closest('.swatch-attribute');
+        var attributeId = $swatchAttribute.data('attribute-id') || $swatchAttribute.attr('attribute-id')
+
         return {
           option: {
-            code: $el.closest('.swatch-attribute').attr('attribute-id').toString(),
-            label: $el.closest('.swatch-attribute').find('.swatch-attribute-label').text(),
+            code: attributeId.toString(),
+            label: $swatchAttribute.find('.swatch-attribute-label').text(),
           },
           value: {
-            id: $el.attr('option-id').toString(),
-            label: $el.attr('option-label'),
+            id: ($el.data('option-id') || $el.attr('option-id')).toString(),
+            label: $el.data('option-label') || $el.attr('option-label'),
           },
         }
       }).map(function (i, el) {
