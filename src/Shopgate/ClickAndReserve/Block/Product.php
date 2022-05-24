@@ -18,23 +18,22 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-namespace Retailred\Storefront\Block;
+namespace Shopgate\ClickAndReserve\Block;
 
-use Retailred\Storefront\Helper\Data;
-use Retailred\Storefront\Model\Config;
-use Retailred_Storefront_Model_Config;
+use Shopgate\ClickAndReserve\Helper\Data;
+use Shopgate\ClickAndReserve\Model\Config;
 
 class Product extends \Magento\Catalog\Block\Product\View\AbstractView
 {
     /**
-     * @var \Retailred\Storefront\Helper\Product
+     * @var \Shopgate\ClickAndReserve\Helper\Product
      */
     protected $productHelper;
 
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
         \Magento\Framework\Stdlib\ArrayUtils $arrayUtils,
-        \Retailred\Storefront\Helper\Product $productHelper
+        \Shopgate\ClickAndReserve\Helper\Product $productHelper
     ) {
         $this->productHelper = $productHelper;
         parent::__construct($context,$arrayUtils);

@@ -1,12 +1,11 @@
 <?php
 
-use Retailred\Storefront\Helper\Data;
-use Retailred\Storefront\Model\Config;
+use Shopgate\ClickAndReserve\Model\Config;
 
-/** @var Retailred\Storefront\Block\Product $this */
+/** @var Shopgate\ClickAndReserve\Block\Product $this */
 
-/** @var Retailred\Storefront\Helper\Data $helper */
-$helper = $this->helper(Retailred\Storefront\Helper\Data::class);
+/** @var Shopgate\ClickAndReserve\Helper\Data $helper */
+$helper = $this->helper(Shopgate\ClickAndReserve\Helper\Data::class);
 
 if ($helper->getConfig(Config::XML_PATH_GENERAL_RENDER) === Config::RENDER_DISABLED) {
     return;

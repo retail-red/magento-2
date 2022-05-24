@@ -2,15 +2,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="retailred" translate="label" sortOrder="999">
-            <label>Retail.red</label>
+        <tab id="shopgate" translate="label" sortOrder="999">
+            <label>Shopgate</label>
         </tab>
 
-        <section id="retailred_storefront" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="shopgate_clickandreserve" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Configuration</label>
-            <tab>retailred</tab>
-            <resource>Retailred_Storefront::config</resource>
+            <label>Click &amp; Reserve</label>
+            <tab>shopgate</tab>
+            <resource>Shopgate_ClickAndReserve::config</resource>
 
             <group id="api" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
                 <label>Plugin &amp; Storefront configuration</label>
@@ -109,6 +109,21 @@
                         Modal - Opens a popup where the customer can search for his store via zip code or geolocation.
                         Also shows address, distance and opening hours if available. <br/>
                         Dropdown - A simple dropdown where the customer can choose the store from. Recommended only for small amount of stores.
+                    ]]></comment>
+                </field>
+
+                <field id="saveCustomerData" translate="label" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Save user data</label>
+                    <options>
+                        <option label="off">Off</option>
+                        <option label="on">On</option>
+                        <option label="checkbox">Checkbox</option>
+                    </options>
+                    <comment><![CDATA[
+                        Controls how user data is persisted within the localStorage. Can be one of <br/>
+                        "Off" (data will not be saved),
+                        "On" (data will be saved in any case),
+                        "Checkbox" (users can decide via a checkbox on the reservation page)
                     ]]></comment>
                 </field>
 

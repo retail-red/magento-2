@@ -6,7 +6,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Retailred_Storefront::config" title="Retailred (Storefront)" sortOrder="100" />
+                            <resource id="Shopgate_ClickAndReserve::config" title="Shopgate (Click and Reserve)" sortOrder="100" />
                         </resource>
                     </resource>
                 </resource>
