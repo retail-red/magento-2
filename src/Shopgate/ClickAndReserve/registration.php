@@ -20,6 +20,6 @@
  */
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Retailred_Storefront',
+    'Shopgate_ClickAndReserve',
     __DIR__
 );

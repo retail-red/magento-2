@@ -7,12 +7,12 @@
         <referenceContainer name="before.body.end">
             <block
                 before="-"
-                template="Retailred_Storefront::elements.phtml"
-                class="Retailred\Storefront\Block\Product"
+                template="Shopgate_ClickAndReserve::elements.phtml"
+                class="Shopgate\ClickAndReserve\Block\Product"
             />
             <block
-                template="Retailred_Storefront::js_init.phtml"
-                class="Retailred\Storefront\Block\Product"
+                template="Shopgate_ClickAndReserve::js_init.phtml"
+                class="Shopgate\ClickAndReserve\Block\Product"
             />
         </referenceContainer>
     </body>

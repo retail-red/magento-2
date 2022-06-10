@@ -1,5 +1,5 @@
 <?php
-namespace Retailred\Storefront\Helper;
+namespace Shopgate\ClickAndReserve\Helper;
 
 /**
  * Copyright Shopgate GmbH.

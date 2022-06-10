@@ -19,14 +19,14 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-namespace Retailred\Storefront\Helper;
+namespace Shopgate\ClickAndReserve\Helper;
 
 use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection as ConfigurableProductCollection;
 use Magento\Framework\App\ObjectManager;
 
 class Product extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    private static $cacheKeyProductVariantsCollection = '_cache_retailred_storefront_variants';
+    private static $cacheKeyProductVariantsCollection = '_cache_shopgate_clickandreserve_variants';
 
     /**
      * Get variants collection for configurable product

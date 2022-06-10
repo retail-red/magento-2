@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <shopgate_clickandreserve>
+            <api>
+                <apiKey />
+                <apiStage>staging</apiStage>
+                <unitSystem>metric</unitSystem>
+                <productCodeMapping>sku</productCodeMapping>
+                <countries>de</countries>
+                <browserHistory>1</browserHistory>
+                <useGeolocationImmediately>1</useGeolocationImmediately>
+                <testMode>0</testMode>
+            </api>
+            <general>
+                <render>reserveButton</render>
+                <renderMode>modal</renderMode>
+                <saveCustomerData>on</saveCustomerData>
+                <inventoryHideNumber>0</inventoryHideNumber>
+                <inventoryShowExactUntil />
+                <inventoryShowLowUntil>5</inventoryShowLowUntil>
+                <termsLink />
+                <privacyLink />
+                <productIdentifiers>ean,isbn</productIdentifiers>
+            </general>
+            <design>
+                <colors><![CDATA[
+                /* Color for common text */
+                --rr-color-text: #000;
+                /* Color for text with a medium emphasis */
+                --rr-color-text-medium-emphasis: #787878;
+                /* Primary color used for form elements and buttons */
+                --rr-color-primary: #000;
+                /* Contrast color for the primary color - used as button text color  */
+                --rr-color-primary-contrast: #fff;
+                /* Color used for links */
+                --rr-color-link: #3c9bb5;
+                /* Text color for disabled buttons */
+                --rr-color-button-disabled: #7f7f7f;
+                /* Background color for disabled buttons */
+                --rr-color-button-background-disabled: #E0E0E0;
+                /* Color used for alerting texts like errors */
+                --rr-color-state-alarm : #b00020;
+                /* Color used for highlighting problems like low stock */
+                --rr-color-state-warning: #f19c45;
+                /* Color used for positive highlighting like successful reservation text */
+                --rr-color-state-success: #32ac5c;
+                /* Font family for the modal */
+                --rr-font-family: inherit
+                ]]></colors>
+                <translations />
+            </design>
+        </shopgate_clickandreserve>
+    </default>
+</config>
