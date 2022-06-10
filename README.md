@@ -1,4 +1,4 @@
-# retail.red plugin for Magento 2
+# Shopgate Storefront Plugin for Magento 2
 
 This plugin enables merchants to easily offer click & reserve functionality in their Magento 2 Shop. 
 It uses our [storefront javascript library](https://github.com/retail-red/storefront-library).
@@ -16,18 +16,18 @@ The script adds a “reserve” button to the product detail page, via which a n
     bin/magento setup:di:compile
     bin/magento cache:clean
     ```
-4. Open the config of our plugin in Magento Admin / Store / Configuration / retail.red and enter your Storefront API Key and API stage.
+4. Open the config of our plugin in Magento Admin / Store / Configuration / Shopgate and enter your Storefront API Key and API stage.
 
 ## Configuration
 
 Our plugin comes with a bunch of configuration options. The only setting that you must setup there is your API Key.
 You will find your key in Shopgate Admin / Settings / General / Storefront API Key
 
-All other settings are optional. 
-More details can be found here https://github.com/retail-red/storefront-library 
+All other settings are optional.
+More details can be found here https://github.com/retail-red/storefront-library
 
 ## Support
-Contact us via [mail@retail.red](mailto:mail@retail.red)
+Contact us via [support@shopgate.com](mailto:support@shopgate.com)
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file for more information.

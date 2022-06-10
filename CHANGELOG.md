@@ -6,33 +6,40 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Changed
-- Updated to storefront api v2
+- updated to Storefront API v2
+
 ### Added
-- New configuration: saveCustomerData
+- configuration on whether customer data should be stored in customer's local storage (on / off / ask customer)
 
 ## [1.1.4] - 2022-04-12
-
-### Fix:
+### Fixed
 - products with variants
 
-## [1.1.2] - 2021-07-12
+## [1.1.3] - 2021-07-28
+### Fixed
+- don't automatically select the first variant if not all attributes have been selected
 
-### Feature:
-- Add product attributes as product identifiers
-- Implement new options format
-- Add config for productNumber mapping
+## [1.1.2] - 2021-07-12
+### Added
+- product attributes as product identifiers
+- new options format
+- config for productNumber mapping
 
 ## [1.1.1] - 2021-05-12
-
-### Feature:
-- Add new web configs
+### Added
+- new web configs
 
 ## [1.1.0] - 2021-04-01
-### Feature:
-- Add live inventory widget
+### Added
+- live inventory widget
 
-## [1.0.0] - 2021-02-15
-### Feature
+## 1.0.0 - 2021-02-15
+### Added
 - initial release
 
-[Unreleased]: https://github.com/retail-red/magento-2/compare/main...HEAD
+[Unreleased]: https://github.com/retail-red/magento-2/compare/v1.1.4...HEAD
+[1.1.4]: https://github.com/retail-red/magento-2/compare/v1.1.3...v1.1.4
+[1.1.3]: https://github.com/retail-red/magento-2/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/retail-red/magento-2/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/retail-red/magento-2/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/retail-red/magento-2/compare/v1.0.0...v1.1.0
