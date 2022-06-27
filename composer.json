@@ -1,6 +1,6 @@
 {
   "name": "shopgate/click-and-reserve-magento2",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Magento 2 Shopgate storefront plugin (c) by Shopgate GmbH",
   "license": "Apache-2.0",
   "type": "magento2-module",
