@@ -46,22 +46,19 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
                 optionsMap = swatches.optionsMap
 
                 $('div.swatch-attribute').each(function (k, v) {
-                    var attribute_id = $(v).attr('attribute-id');
-                    var option_selected = $(v).attr('option-selected');
-
-                    var selected = $(v).find("[option-id=" + option_selected + "]");
+                    var attribute_id = $(v).attr('data-attribute-id') || $(v).attr('attribute-id');
+                    var option_selected = $(v).attr('data-option-selected') || $(v).attr('option-selected');
+                    var label = $(v).find('select option:selected').text() || $(v).find("[data-option-id=" + option_selected + "]").attr('data-option-label')
 
                     var item = {}
                     item.option = {
                         code: attribute_id,
-                        label: $(v).attr('attribute-code') //@todo
+                        label: $(v).find('.swatch-attribute-label').html(),
                     }
 
                     item.value = {
                         id: option_selected ? option_selected : '',
-                        label: selected.attr('option-label') ?
-                            selected.attr('option-label') :
-                            selected.html(),
+                        label,
                         products: optionsMap[attribute_id] && optionsMap[attribute_id][option_selected] ?
                             optionsMap[attribute_id][option_selected].products :
                             []
@@ -146,8 +143,8 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
                 identifiers: productData[variantId || productId].identifiers,
                 options: selectedOptions.map(function (opt) {
                     return {
-                        code: (opt.option.code || opt.option.id).toString(),
-                        name: opt.option.label.toString(),
+                        code: (opt.option.code || opt.option.id),
+                        name: opt.option.label,
                         value: {
                             code: (opt.value.code || opt.value.id).toString(),
                             name: opt.value.label ? opt.value.label.toString() : ''
