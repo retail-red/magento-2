@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- support for attribute selection via dropdown
+- support for configurable product attribute selection (variant selection dropdown on pdp)
 
 ## [1.1.5] - 2022-06-27
 ### Changed
