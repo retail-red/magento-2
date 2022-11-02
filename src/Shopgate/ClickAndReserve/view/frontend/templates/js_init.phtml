@@ -21,190 +21,243 @@ $localization = $helper->getConfig(Config::XML_PATH_DESIGN_TRANSLATIONS);
 
 <script async type='text/javascript' src='https://cdn.retail.red/omni/retailred-storefront-library-v2.js'></script>
 <script type="text/javascript">
-  require([
-    'jquery',
-    'Magento_Catalog/js/product/storage/storage-service',
-    'Magento_Customer/js/customer-data',
-    'domReady!'
-  ], function ($, storageService, customerData) {
-    var productData = <?= json_encode($this->getProductsConfig()) ?>;
-    var $productAddToCartForm = $('#product_addtocart_form')
+    require([
+        'jquery',
+        'Magento_Catalog/js/product/storage/storage-service',
+        'Magento_Customer/js/customer-data',
+        'domReady!'
+    ], function ($, storageService, customerData) {
 
-    function getSelectedProduct () {
-      var products = storageService.getStorage('product_data_storage').getDataFromLocalStorage()
-      var productId = $productAddToCartForm.find('input[name=product]').val()
-      var product = products[productId]
+        var productData = <?= json_encode($this->getProductsConfig()) ?>;
+        var $productAddToCartForm = $('#product_addtocart_form')
 
-      var swatches = $('.swatch-opt').data('mage-SwatchRenderer')
-      var optionsMap = swatches ? swatches.optionsMap : {}
+        function getSelectedProduct() {
+            var products = storageService.getStorage('product_data_storage').getDataFromLocalStorage()
+            var productId = $productAddToCartForm.find('input[name=product]').val()
+            var product = products[productId]
 
-      var selectedOptions = $('.swatch-option.selected').map(function (i, el) {
-        var $el = $(el);
-        var $swatchAttribute = $el.closest('.swatch-attribute');
-        var attributeId = $swatchAttribute.data('attribute-id') || $swatchAttribute.attr('attribute-id')
+            var optionsMap = {}
+            var selectedOptions = []
 
-        return {
-          option: {
-            code: attributeId.toString(),
-            label: $swatchAttribute.find('.swatch-attribute-label').text(),
-          },
-          value: {
-            id: ($el.data('option-id') || $el.attr('option-id')).toString(),
-            label: $el.data('option-label') || $el.attr('option-label'),
-          },
-        }
-      }).map(function (i, el) {
-        el.value.products = optionsMap[el.option.code][el.value.id].products
-        return el
-      }).get()
+            var swatches = $('.swatch-opt').data('mage-SwatchRenderer')
+            var configurableWidget = $('#product_addtocart_form').data('mage-configurable');
 
-      var processVariant = selectedOptions.length > 0 && selectedOptions.length === Object.keys(optionsMap).length;
+            if (swatches) {
+                optionsMap = swatches.optionsMap
 
-      // Get variant id
-      var variantId = !processVariant
-        ? null
-        : selectedOptions
-          .map(function (entry) {
-            return entry.value
-          })
-          .reduce(function (acc, value) {
-            // Init with products from first option
-            if (acc === null) {
-              acc = value.products || []
-            } else {
-              // Remove products that don't match with the current value products
-              acc = acc.filter(function (variantId) {
-                return (value.products || []).indexOf(variantId) !== -1
-              })
+                $('div.swatch-attribute').each(function (k, v) {
+                    var attribute_id = $(v).attr('data-attribute-id') || $(v).attr('attribute-id');
+                    var option_selected = $(v).attr('data-option-selected') || $(v).attr('option-selected');
+                    var label = $(v).find('select option:selected').text() || $(v).find("[data-option-id=" + option_selected + "]").attr('data-option-label')
+
+                    var item = {}
+                    item.option = {
+                        code: attribute_id,
+                        label: $(v).find('.swatch-attribute-label').html(),
+                    }
+
+                    item.value = {
+                        id: option_selected ? option_selected : '',
+                        label,
+                        products: optionsMap[attribute_id] && optionsMap[attribute_id][option_selected] ?
+                            optionsMap[attribute_id][option_selected].products :
+                            []
+                    }
+
+                    selectedOptions.push(item)
+                });
+
+            } else if (configurableWidget) {
+                optionsMap = prepareOptionsMapFromConfig(configurableWidget.option('spConfig'))
+
+                $('#product-options-wrapper .field').each(function () {
+                    var code = $(this).find('label').attr('for').split('attribute')[1];
+                    var selectedOptionId = $(this).find('option:selected').val();
+
+                    var item = {}
+                    item.option = {
+                        code,
+                        label: $(this).find('label span').html()
+                    }
+                    item.value = {
+                        id: selectedOptionId,
+                        label: $(this).find('option:selected').text(),
+                        products: optionsMap[code] && optionsMap[code][selectedOptionId] ?
+                            optionsMap[code][selectedOptionId].products :
+                            []
+                    }
+                    selectedOptions.push(item)
+                });
             }
-            return acc
-          }, null)
-          .reduce(function (r, variantId) {
-            return variantId || ''
-          }, null)
 
-      var imageUrl = product.images[0].url;
-      if (variantId) {
-        var images = swatches.options.jsonConfig.images[variantId];
-        if (images.length > 0) {
-          imageUrl = images[0].img;
-        }
-      }
+            var processVariant = selectedOptions.length > 0 && selectedOptions.length === Object.keys(optionsMap).length;
 
-      var selectedProduct = productData[variantId || productId];
+            // Get variant id
+            var variantId = !processVariant
+                ? null
+                : selectedOptions
+                    .map(function (entry) {
+                        return entry.value
+                    })
+                    .reduce(function (acc, value) {
+                        // Init with products from first option
+                        if (acc === null) {
+                            acc = value.products || []
+                        } else {
+                            // Remove products that don't match with the current value products
+                            acc = acc.filter(function (variantId) {
+                                return (value.products || []).indexOf(variantId) !== -1
+                            })
+                        }
+                        return acc
+                    }, null)
+                    .reduce(function (r, variantId) {
+                        return variantId || ''
+                    }, null)
 
-      return {
-        /**
-         * Do not send configurable product or auto-detected product.
-         * Only explicit user selection
-         */
-        code: selectedProduct.type === 'standard' ? selectedProduct.number : null,
-        imageUrl: imageUrl,
-        name: product.name,
-        identifiers: productData[variantId || productId].identifiers,
-        options: selectedOptions.map(function (opt) {
-          return{
-            code: (opt.option.code || opt.option.id).toString(),
-            name: opt.option.label.toString(),
-            value: {
-              code: (opt.value.code || opt.value.id).toString(),
-              name: opt.value.label.toString()
+            var imageUrl = product.images[0].url;
+
+            if (variantId) {
+                /** check use image from swatches or configurableWidget **/
+                var images = swatches ?
+                    swatches.options.jsonConfig.images[variantId] :
+                    configurableWidget ?
+                        configurableWidget.option('spConfig').images[variantId] :
+                        false
+
+                if (images && images.length > 0) {
+                    imageUrl = images[0].img;
+                }
             }
-          };
-        }),
-        price: Number($('[data-price-type="finalPrice"]').data('priceAmount')),
-        quantity: Number($productAddToCartForm.find('input[name=qty]').val()),
-        currencyCode: '<?= $helper->getCurrencyCode() ?>'
-      };
-    }
 
-    function initRetailred () {
-      try {
-         <?php if (!$localization) : ?>
-         var localization = {};
-         <?php else : ?>
-         var localization = <?= $localization ?>;
-         <?php endif; ?>
+            var selectedProduct = productData[variantId || productId];
 
-        localization.localeCode = <?= json_encode($helper->getLocaleCode()) ?>;
-        localization.countries = <?= json_encode(explode(',', $helper->getConfig(Config::XML_PATH_API_COUNTRIES))) ?>;
-
-        var customer = customerData.get('customer')();
-        var names = [];
-        if (customer && customer.fullname) {
-          names = customer.fullname.split(' ');
+            return {
+                /**
+                 * Do not send configurable product or auto-detected product.
+                 * Only explicit user selection
+                 */
+                code: selectedProduct.type === 'standard' ? selectedProduct.number : null,
+                imageUrl: imageUrl,
+                name: product.name,
+                identifiers: productData[variantId || productId].identifiers,
+                options: selectedOptions.map(function (opt) {
+                    return {
+                        code: (opt.option.code || opt.option.id),
+                        name: opt.option.label,
+                        value: {
+                            code: (opt.value.code || opt.value.id).toString(),
+                            name: opt.value.label ? opt.value.label.toString() : ''
+                        }
+                    };
+                }),
+                price: Number($('[data-price-type="finalPrice"]').data('priceAmount')),
+                quantity: Number($productAddToCartForm.find('input[name=qty]').val()),
+                currencyCode: '<?= $helper->getCurrencyCode() ?>'
+            };
         }
 
-        var retailred = window.RetailRedStorefront.create({
-          apiKey: '<?= $helper->getConfig(Config::XML_PATH_API_APIKEY) ?>',
-          apiStage: '<?= $helper->getConfig(Config::XML_PATH_API_API_STAGE) ?>',
-          useGeolocationImmediately: <?= $helper->getConfig(Config::XML_PATH_API_USE_GEOLOCATION_IMMEDIATELY) === '1' ? 'true' : 'false' ?>,
-          browserHistory: <?= $helper->getConfig(Config::XML_PATH_API_BROWSER_HISTORY) === '1' ? 'true' : 'false' ?>,
-          testMode: <?= $helper->getConfig(Config::XML_PATH_API_TEST_MODE) === '1' ? 'true' : 'false' ?>,
-          unitSystem: '<?= $helper->getConfig(Config::XML_PATH_API_UNIT_SYSTEM) ?>',
-          saveCustomerData: '<?= $helper->getConfig(Config::XML_PATH_GENERAL_SAVE_CUSTOMER_DATA) ?>',
-          localization: localization,
-          inventory: {
-            hideNumber: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_HIDE_NUMBER) === '1' ? 'true' : 'false' ?>,
-            showExactUntil: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_SHOW_EXACT_UNTIL) ?: 'null' ?>,
-            showLowUntil: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_SHOW_LOW_UNTIL) ?: 'null' ?>
-          },
-          legal: {
-             terms: <?= $terms ? json_encode($terms) : 'null' ?>,
-             privacy: <?= $privacy ? json_encode($privacy): 'null' ?>,
-          },
-          customer: {
-            code: customer.data_id,
-            firstName: names[0],
-            lastName: names[1],
-            phone: null,
-            emailAddress: null,
-          },
-          product: getSelectedProduct(),
-          templates: {
-            customTemplates: {
-              reserveButton: '<button id="rr-omni-reserve-button" class="action primary tocart">{{t "reserveButton.title" }}</button>'
+        function prepareOptionsMapFromConfig(config) {
+            var optionsMap = {};
+            Object.keys(config.attributes).map((item) => {
+                optionsMap[item] = {};
+                config.attributes[item].options.map((option) => {
+                    optionsMap[item][option.id] = {
+                        products: option.products,
+                    };
+                });
+            });
+            return optionsMap;
+        }
+
+        function initRetailred() {
+            try {
+                <?php if (!$localization) : ?>
+                var localization = {};
+                <?php else : ?>
+                var localization = <?= $localization ?>;
+                <?php endif; ?>
+
+                localization.localeCode = <?= json_encode($helper->getLocaleCode()) ?>;
+                localization.countries = <?= json_encode(explode(',',
+                    $helper->getConfig(Config::XML_PATH_API_COUNTRIES))) ?>;
+
+                var customer = customerData.get('customer')();
+                var names = [];
+                if (customer && customer.fullname) {
+                    names = customer.fullname.split(' ');
+                }
+
+                var retailred = window.RetailRedStorefront.create({
+                    apiKey: '<?= $helper->getConfig(Config::XML_PATH_API_APIKEY) ?>',
+                    apiStage: '<?= $helper->getConfig(Config::XML_PATH_API_API_STAGE) ?>',
+                    useGeolocationImmediately: <?= $helper->getConfig(Config::XML_PATH_API_USE_GEOLOCATION_IMMEDIATELY) === '1' ? 'true' : 'false' ?>,
+                    browserHistory: <?= $helper->getConfig(Config::XML_PATH_API_BROWSER_HISTORY) === '1' ? 'true' : 'false' ?>,
+                    testMode: <?= $helper->getConfig(Config::XML_PATH_API_TEST_MODE) === '1' ? 'true' : 'false' ?>,
+                    unitSystem: '<?= $helper->getConfig(Config::XML_PATH_API_UNIT_SYSTEM) ?>',
+                    saveCustomerData: '<?= $helper->getConfig(Config::XML_PATH_GENERAL_SAVE_CUSTOMER_DATA) ?>',
+                    localization: localization,
+                    inventory: {
+                        hideNumber: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_HIDE_NUMBER) === '1' ? 'true' : 'false' ?>,
+                        showExactUntil: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_SHOW_EXACT_UNTIL) ?: 'null' ?>,
+                        showLowUntil: <?= $helper->getConfig(Config::XML_PATH_GENERAL_INVENTORY_SHOW_LOW_UNTIL) ?: 'null' ?>
+                    },
+                    legal: {
+                        terms: <?= $terms ? json_encode($terms) : 'null' ?>,
+                        privacy: <?= $privacy ? json_encode($privacy) : 'null' ?>,
+                    },
+                    customer: {
+                        code: customer.data_id,
+                        firstName: names[0],
+                        lastName: names[1],
+                        phone: null,
+                        emailAddress: null,
+                    },
+                    product: getSelectedProduct(),
+                    templates: {
+                        customTemplates: {
+                            reserveButton: '<button id="rr-omni-reserve-button" class="action primary tocart">{{t "reserveButton.title" }}</button>'
+                        }
+                    }
+                });
+
+                $productAddToCartForm.find('input[name=qty]').change(function () {
+                    retailred.updateConfig({
+                        product: {
+                            quantity: Number($(this).val()),
+                        },
+                    })
+                });
+
+                $('[data-role=priceBox]').on('updatePrice', function () {
+                    /** Swatches module dispatch this event */
+                    retailred.updateConfig({
+                        product: getSelectedProduct(),
+                    })
+                });
+
+                <?php if (!$isLiveInventory) : ?>
+                retailred.renderReserveButton('#rr-reserve-button', {}, function (next) {
+                    if ($productAddToCartForm.valid && $productAddToCartForm.valid()) {
+                        next();
+                    }
+                });
+                <?php endif; ?>
+
+                <?php if ($isLiveInventory) : ?>
+                retailred.renderLiveInventory('#rr-live-inventory', {
+                    variant: '<?= $liveInventoryMode ?>'
+                });
+                <?php endif; ?>
+
+            } catch (e) {
+                console.error(e);
             }
-          }
+        }
+
+        storageService.onStorageInit('product_data_storage', function () {
+            setTimeout(initRetailred, 500);
         });
-
-        $productAddToCartForm.find('input[name=qty]').change(function () {
-          retailred.updateConfig({
-            product: {
-              quantity: Number($(this).val()),
-            },
-          })
-        });
-
-        $('[data-role=priceBox]').on('updatePrice', function () {
-          /** Swatches module dispatch this event */
-          retailred.updateConfig({
-            product: getSelectedProduct(),
-          })
-        });
-
-        <?php if (!$isLiveInventory) : ?>
-        retailred.renderReserveButton('#rr-reserve-button', {}, function(next) {
-          if ($productAddToCartForm.valid && $productAddToCartForm.valid()) {
-            next();
-          }
-        });
-        <?php endif; ?>
-
-        <?php if ($isLiveInventory) : ?>
-        retailred.renderLiveInventory('#rr-live-inventory', {
-          variant: '<?= $liveInventoryMode ?>'
-        });
-        <?php endif; ?>
-
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    storageService.onStorageInit('product_data_storage', function () {
-      setTimeout(initRetailred, 500);
     });
-});
 
 </script>

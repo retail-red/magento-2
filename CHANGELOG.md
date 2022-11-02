@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.1.6] - 2022-07-08
+### Added
+- support for configurable product attribute selection (variant selection dropdown on pdp)
 
 ## [1.1.5] - 2022-06-27
 ### Changed
@@ -39,7 +42,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/retail-red/magento-2/compare/v1.1.5...HEAD
+[Unreleased]: https://github.com/retail-red/magento-2/compare/v1.1.6...HEAD
+[1.1.6]: https://github.com/retail-red/magento-2/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/retail-red/magento-2/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/retail-red/magento-2/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/retail-red/magento-2/compare/v1.1.2...v1.1.3
